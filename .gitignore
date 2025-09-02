@@ -1,0 +1,29 @@
+# Python相关
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+gpa_env/
+.env
+
+# Excel文件（避免上传个人成绩数据）
+*.xlsx
+*.xls
+
+# IDE相关
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 操作系统相关
+.DS_Store
+Thumbs.db
+
+# 临时文件
+*.tmp
+*.log
+result*.txt

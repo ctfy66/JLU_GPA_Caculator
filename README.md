@@ -2,7 +2,7 @@
 
 一个功能完整的学分绩点(GPA)计算工具，支持图形界面和命令行两种使用方式。可以从Excel文件读取课程信息并自动计算加权平均GPA。
 
-![GitHub repo size](https://img.shields.io/github/repo-size/your-username/GPACaculator)
+![GitHub repo size](https://img.shields.io/github/repo-size/ctfy66/GPACaculator)
 ![Python version](https://img.shields.io/badge/python-3.6+-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
@@ -40,11 +40,26 @@
 
 1. **克隆项目**
 ```bash
-git clone https://github.com/your-username/GPACaculator.git
+git clone https://github.com/ctfy66/JLU_GPA_Caculator.git
 cd GPACaculator
 ```
 
 2. **安装Python依赖**
+
+**方法A：使用虚拟环境（推荐）**
+```bash
+# Windows
+py -m venv gpa_env
+gpa_env\Scripts\activate
+pip install -r requirements.txt
+
+# Linux/macOS
+python3 -m venv gpa_env
+source gpa_env/bin/activate
+pip install -r requirements.txt
+```
+
+**方法B：直接安装**
 ```bash
 pip3 install -r requirements.txt
 ```
@@ -175,12 +190,36 @@ GPACaculator/
 ## 🔧 系统环境配置
 
 ### Windows用户
-```bash
+
+#### 🎯 方法1：使用虚拟环境（推荐，最简单）
+```cmd
+# 创建虚拟环境
+py -m venv gpa_env
+
+# 激活虚拟环境
+gpa_env\Scripts\activate
+
 # 安装依赖
 pip install pandas openpyxl
 
-# 直接运行
+# 运行程序
 python gpa_gui.py
+
+# 使用完后退出虚拟环境
+deactivate
+```
+
+#### 方法2：直接安装（如果方法1不想用）
+```cmd
+# 推荐使用python -m pip安装
+python -m pip install pandas openpyxl
+
+# 运行程序（注意Windows上通常使用python而不是python3）
+python gpa_gui.py
+
+# 如果遇到模块导入错误，请尝试：
+python -m pip uninstall pandas openpyxl -y
+python -m pip install pandas openpyxl
 ```
 
 ### Linux用户
@@ -204,7 +243,68 @@ pip3 install pandas openpyxl
 
 ## 🛠️ 故障排除
 
-### 问题1：ModuleNotFoundError: No module named 'tkinter'
+### 问题1：ModuleNotFoundError: No module named 'pandas'（Windows常见）
+**解决方案：**
+```cmd
+# 方法1：使用Windows系统Python（推荐）
+py --version  # 检查是否有系统Python
+py -m pip install pandas openpyxl
+py gpa_gui.py
+
+# 方法2：如果使用标准python命令
+python --version
+python -m pip install pandas openpyxl
+python gpa_gui.py
+
+# 方法3：重新安装依赖
+python -m pip uninstall pandas openpyxl -y
+python -m pip install pandas openpyxl
+```
+
+### 问题1.1：No module named 'pip'（MSYS2/MinGW环境）
+**问题原因：** 使用了MSYS2中的不完整Python安装
+**解决方案：**
+```cmd
+# 选项A：使用Windows系统Python（推荐）
+# 1. 下载安装官方Python: https://python.org/downloads/
+# 2. 安装时勾选"Add Python to PATH"
+# 3. 重新打开命令提示符使用 py 或 python 命令
+
+# 选项B：在MSYS2中安装完整Python环境
+# 在MSYS2终端中运行:
+pacman -S mingw-w64-x86_64-python-pip mingw-w64-x86_64-python-pandas
+python -m pip install openpyxl
+```
+
+### 问题1.2：pip安装成功但程序仍报ModuleNotFoundError（Windows环境不一致）
+**问题原因：** py命令的pip和运行时使用不同的Python环境
+**诊断命令：**
+```cmd
+# 检查py命令的Python路径
+py -c "import sys; print('Python路径:', sys.executable)"
+
+# 测试模块导入
+py -c "import pandas; print('pandas可用')"
+```
+
+**解决方案：**
+```cmd
+# 方法1：强制重新安装
+py -m pip uninstall pandas openpyxl -y
+py -m pip install --no-cache-dir pandas openpyxl
+
+# 方法2：使用虚拟环境
+py -m venv gpa_env
+gpa_env\Scripts\activate
+pip install pandas openpyxl
+python gpa_gui.py
+
+# 方法3：清理并重装
+py -m pip cache purge
+py -m pip install --force-reinstall pandas openpyxl
+```
+
+### 问题2：ModuleNotFoundError: No module named 'tkinter'
 **解决方案：**
 ```bash
 # Linux
@@ -212,9 +312,11 @@ sudo apt install python3-tk
 
 # macOS  
 brew install python-tk
+
+# Windows：tkinter通常已内置，如果报错请重新安装Python
 ```
 
-### 问题2：中文字符显示为空白框
+### 问题3：中文字符显示为空白框（Linux/WSL）
 **解决方案：**
 ```bash
 # 安装中文字体
@@ -222,17 +324,27 @@ sudo apt install fonts-noto-cjk fonts-wqy-zenhei fonts-wqy-microhei
 fc-cache -fv
 ```
 
-### 问题3：WSL2图形界面无法显示
+### 问题4：WSL2图形界面无法显示
 **解决方案：**
 - **Windows 11**：内置WSLg支持，重启WSL即可
 - **Windows 10**：安装VcXsrv或X410，设置DISPLAY变量
 
-### 问题4：Excel文件读取失败
+### 问题5：Excel文件读取失败
 **检查项目：**
 - ✅ 文件是否为.xlsx格式
 - ✅ 是否包含"学分"和"绩点"列
 - ✅ 数据是否为数字格式
 - ✅ 文件是否已关闭（Excel未占用）
+
+### 问题6：Python版本兼容性
+**解决方案：**
+```cmd
+# 检查Python版本（需要3.6+）
+python --version
+
+# 如果版本过低，请升级Python
+# 从 https://python.org 下载最新版本
+```
 
 ## 🎨 界面预览
 
@@ -291,14 +403,11 @@ fc-cache -fv
 ⭐ 如果这个项目对您有帮助，请给个星标支持一下！
 
 ## 更新日志
-
-### v2.0.0
+### v1.0.0  
 - ✨ 新增图形用户界面
 - 🎨 完善的中文字体支持
 - 📊 增强的成绩分析功能
 - 🔧 改进的错误处理机制
-
-### v1.0.0  
 - 🚀 基础命令行GPA计算功能
 - 📁 Excel文件读取支持
 - 📈 基本的结果展示
