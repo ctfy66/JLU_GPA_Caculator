@@ -1,8 +1,8 @@
 # 🎓 GPA计算器
 
-一个功能完整的学分绩点(GPA)计算工具，支持图形界面和命令行两种使用方式。可以从Excel文件读取课程信息并自动计算加权平均GPA。
+一个功能完整的学分绩点(GPA)计算工具，适用吉林大学GPA计算.支持图形界面和命令行两种使用方式。可以从Excel文件读取课程信息并自动计算加权平均GPA。计算公式:平均学分绩点（GPA）=Σ（学分*绩点）/Σ学分。
 
-![GitHub repo size](https://img.shields.io/github/repo-size/ctfy66/GPACaculator)
+![GitHub repo size](https://img.shields.io/github/repo-size/ctfy66/JLU_GPA_Caculator)
 ![Python version](https://img.shields.io/badge/python-3.6+-blue.svg)
 ![License](https://img.shields.io/badge/license-MIT-green.svg)
 
@@ -41,7 +41,7 @@
 1. **克隆项目**
 ```bash
 git clone https://github.com/ctfy66/JLU_GPA_Caculator.git
-cd GPACaculator
+cd JLU_GPA_Caculator
 ```
 
 2. **安装Python依赖**
